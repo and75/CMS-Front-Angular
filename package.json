@@ -1,5 +1,5 @@
 {
-  "name": "admin-dashboard",
+  "name": "demo",
   "private": true,
   "scripts": {
     "ng": "npm exec ng",
