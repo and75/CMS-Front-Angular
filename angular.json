@@ -31,6 +31,7 @@
             ],
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "server": "src/server.ts",
             "outputPath": "dist/demo/browser",
             "polyfills": [
               "zone.js"
@@ -43,7 +44,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "tsConfig": "tsconfig.app.json"
+            "tsConfig": "tsconfig.app.json",
+            "ssr": {
+              "entry": "src/main.server.ts"
+            }
           }
         },
         "serve": {
