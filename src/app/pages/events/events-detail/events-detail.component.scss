@@ -1,0 +1,20 @@
+.event-detail {
+  position: relative;
+}
+
+.news-item {
+  .event-date {
+    font-size: 2rem !important;
+    line-height: 1;
+    width: 150px;
+    height: 150px;
+    font-weight: bold;
+    background-color: var(--bs-primary);
+    color: #ffffff;
+
+    .icon-border {
+      width: 140px;
+      height: 140px;
+    }
+  }
+}

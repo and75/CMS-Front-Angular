@@ -1,0 +1,57 @@
+<section class="pt-5 event-detail" style="background-color: #ffffff" *ngIf="news$ | async as news">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-12 news-container">
+                <div class="news-item d-flex align-items-start" style="max-width: 800px;">
+                    <div class="icon d-none d-md-flex text-center bg-primary p-4">
+                        <img src="/assets/img/logo.png" width="123px" class="p-3">
+                    </div>
+                    <div class="content ms-md-3 ps-1 ps-md-3 border-start">
+                        <h1 class="title mb-3">{{ news.title }}</h1>
+                        <div class="infos d-flex justify-content-start align-items-center gap-3 mt-2 mb-5">
+                            <div class="date"><i class="bi bi-calendar"></i> {{ news.publishedAt | date }}</div>
+                            <div class="author">
+                                <i class="bi bi-person-circle"></i> by Team
+                            </div>
+                            <div class="categories">
+                                <span class="badge bg-secondary me-1" *ngFor="let category of news.categories">
+                                    {{ category.name }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text mb-5">
+                            <div class="content">
+                                {{ news.content }}
+                            </div>
+                        </div>
+                        <ng-container *ngIf="(news.source ?? []).length > 0">
+                            <div class="text mb-5">
+                                <h5>Sources</h5>
+                                <ul class="list-group list-group-flush mb-4">
+                                    <li class="list-group-item d-flex justify-content-start gap-2"
+                                        *ngFor="let b of news.source">
+                                        <div><i class="bi bi-link"></i></div>
+                                        <a href="{{ b.url }}" target="_blank" class="link-primary">
+                                            {{ b.label }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </ng-container>
+                        <div class="youtube mb-2" *ngIf="news.youtube">
+                            <a href="{{ news.youtube }}" target="_blank" class="btn-primary btn btn-sm">
+                                <i class="bi bi-youtube"></i> See video on YouTube
+                            </a>
+                        </div>
+                        <div class="vimeo mb-5" *ngIf="news.vimeo">
+                            <a href="{{ news.vimeo }}" target="_blank" class="btn-primary btn btn-sm">
+                                <i class="bi bi-vimeo"></i> See video on <Var></Var>imeo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-latest-news></app-latest-news>

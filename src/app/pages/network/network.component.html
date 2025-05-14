@@ -1,0 +1,83 @@
+<section class="network-page px-md-0 py-md-5 px-3 py-3">
+  <div class="container">
+    
+    <app-network-filters
+      [filters]="filters"
+      [selectedFilter]="selectedFilter"
+      [searchTerm]="searchTerm"
+      (filterChange)="onFilterChange($event)"
+      (searchChange)="onSearch($event)">
+    </app-network-filters>
+
+    <div class="network-section pt-4" *ngIf="data$ | async as data">
+      <!-- CGGG Section -->
+      <section class="network-group" *ngIf="shouldShowSection('cggg') && filterItems(data.cggg).length > 0">
+        <h2>CGGG Members</h2>
+        <div class="network-grid">
+          <a *ngFor="let item of filterItems(data.cggg)" 
+             [href]="item.url" 
+             target="_blank" 
+             class="network-item">
+            <div class="network-content">
+              <h3>{{ item.label }}</h3>
+              <i class="bi bi-box-arrow-up-right"></i>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Axe Section -->
+      <section class="network-group" *ngIf="shouldShowSection('axe') && filterItems(data.axe).length > 0">
+        <h2>Research Axes</h2>
+        <div class="network-grid">
+          <a *ngFor="let item of filterItems(data.axe)" 
+             [href]="item.url" 
+             target="_blank" 
+             class="network-item">
+            <div class="network-content">
+              <h3>{{ item.label }}</h3>
+              <i class="bi bi-box-arrow-up-right"></i>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- France Section -->
+      <section class="network-group" *ngIf="shouldShowSection('france') && filterItems(data.france).length > 0">
+        <h2>French Network</h2>
+        <div class="network-grid">
+          <a *ngFor="let item of filterItems(data.france)" 
+             [href]="item.url" 
+             target="_blank" 
+             class="network-item">
+            <div class="network-content">
+              <h3>{{ item.label }}</h3>
+              <i class="bi bi-box-arrow-up-right"></i>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- International Section -->
+      <section class="network-group" *ngIf="shouldShowSection('international') && filterItems(data.international).length > 0">
+        <h2>International Network</h2>
+        <div class="network-grid">
+          <a *ngFor="let item of filterItems(data.international)" 
+             [href]="item.url" 
+             target="_blank" 
+             class="network-item">
+            <div class="network-content">
+              <h3>{{ item.label }}</h3>
+              <i class="bi bi-box-arrow-up-right"></i>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- No Results Message -->
+      <div class="no-results" *ngIf="!hasResults(data)">
+        <p>No networks found matching your search criteria.</p>
+      </div>
+    </div>
+  </div>
+</section>

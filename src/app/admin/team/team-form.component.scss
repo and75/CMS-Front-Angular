@@ -1,0 +1,28 @@
+.card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.form-control,
+.form-select {
+  &:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  }
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.btn {
+  i {
+    margin-right: 0.5rem;
+  }
+}

@@ -1,0 +1,81 @@
+<section id="latestevents" class="overlay-section last-news">
+    <div id="background-div"></div>
+    <div class="container content-div">
+        <div class="px-3 py-5 px-md-0 py-md-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-center w-100 pb-5" style="height: 100px;">
+                        <div>
+                            <h2 class="fs-1 flex-fill">Latest events</h2>
+                            <p class="lead text-white">Browse our upcoming events</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="events$ | async as events">
+                <div class="col-12">
+                    <div class="d-flex mb-3">
+                        <div class="d-none d-md-flex align-items-start me-3"
+                            style="width:250px">
+                            <div class="event-date border border-3 border-light rounded-3 d-flex flex-column align-items-center justify-content-center">
+                                <div>{{ events[0].date_start | date:'LLL'}}</div>
+                                <div>{{ events[0].date_start | date:'d'}}</div>
+                                <div>{{ events[0].date_start | date:'Y'}}</div>
+                            </div>
+                        </div>
+                        <div class="w-100 border border-3 border-light rounded-3 text-white">
+                            <div class="p-4">
+                                <h2 class="fs-2 pb-2">
+                                    <a [routerLink]="events[0].link"
+                                        class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                                        {{ events[0].title }}
+                                    </a>
+                                </h2>
+                                <div class="infos d-flex justify-content-start align-items-center gap-3 mt-2 mb-4">
+                                    <div class="date"><i class="bi bi-calendar"></i> {{ events[0].updatedAt | date }}
+                                    </div>
+                                    <div class="author">
+                                        <i class="bi bi-person-circle"></i> by Team
+                                    </div>
+                                </div>
+                                <p class="fs-5 mb-5">{{ events[0].description | truncate:300 }}</p>
+                                <h4>Speakers</h4>
+                                <p class="fs-6">{{ events[0].speakers }}</p>
+
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center border-top border-3 border-light p-4">
+                                <div>
+                                    <a [routerLink]="['/events/?cat=', events[0].category]"
+                                        class="badge text-bg-light text-decoration-none me-1">{{events[0].category}}</a>
+                                </div>
+                                <app-social-share currentUrl="/news/{{events[0].slug}}"
+                                    buttonStyle="btn-outline-light"></app-social-share>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-end mt-4">
+                    <a routerLink="/events" class="btn btn-outline-light">All events <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row mt-2 g-3" *ngIf="events$ | async as events">
+            <div class="col-12 col-md-4" *ngFor="let event of events.slice(1)">
+                <div class="d-flex flex-row justify-content-center mb-3 border border-1 border-light rounded-3"
+                    style="min-height: 120px;">
+                    <div class=" p-3 w-100">
+                        <p class="mb-0 text-bold">{{ event.date_start }}</p>
+                        <h5 class="pb-0 m-0">
+                            <a [routerLink]="event.link"
+                                class="link-light text-white link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                                {{ event.title }}
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</section>

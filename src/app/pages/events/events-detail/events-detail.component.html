@@ -1,0 +1,56 @@
+<section class="pt-5 event-detail" style="background-color: #ffffff" *ngIf="event$ | async as event">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-12 news-container">
+        <div class="news-item d-flex align-items-start" style="max-width: 800px;">
+          <div class="d-none d-md-flex align-items-start me-3" style="width:150px">
+            <div
+              class="event-date rounded-3 d-flex flex-column align-items-center justify-content-center">
+              <div class="icon-border border border-3 border-light rounded-3 d-flex flex-column align-items-center justify-content-center">
+                <div>{{ event.date_start | date:'LLL'}}</div>
+                <div>{{ event.date_start | date:'d'}}</div>
+                <div>{{ event.date_start | date:'Y'}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="content ms-md-3 ps-1 ps-md-3 border-start">
+            <h1 class="title mb-3">{{ event.title }}</h1>
+            <div class="infos d-flex justify-content-start align-items-center gap-3 mt-2 mb-5">
+              <div class="date">{{ event.date_start | date:'longDate' }}</div>
+              <div class="author">
+                <i class="bi bi-person-circle"></i> by Team
+              </div>
+              <div class="category">
+                <button class="btn btn-outline-primary"
+                  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                  {{ event.category }}
+                </button>
+              </div>
+            </div>
+            <div class="text mb-5">
+              {{ event.description }}
+            </div>
+            <div class="text mb-5" *ngIf="event.speakers">
+              <h4><i class="bi bi-people"></i> Speakers</h4>
+              {{ event.speakers }}
+            </div>
+            <div class="text mb-5" *ngIf="event.location">
+              <h4><i class="bi bi-geo-alt"></i> Location</h4>
+              {{ event.location }}
+            </div>
+            <div class="text mb-5" *ngIf="event.link_zoom">
+              <h4><i class="bi bi-camera-video"></i> Video conference</h4>
+              <a [href]="event.link_zoom" target="_blank">{{ event.link_zoom }}</a>
+            </div>
+            <div class="text mb-5" *ngIf="event.programme">
+              <a class="btn btn-primary btn-sm" [href]="event.programme" target="_blank">
+                <i class="bi bi-filetype-pdf"></i> Download PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-events-navigator></app-events-navigator>

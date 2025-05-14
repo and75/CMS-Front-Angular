@@ -1,0 +1,25 @@
+  .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      font-size: 1.2rem;
+      margin-right: 0;
+    }
+  }
+
+  .dropdown-menu {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .dropdown-item {
+      padding: 0.5rem 2rem 0.5rem 1rem;
+      display: flex;
+      align-items: start;
+      gap: 0.5rem;
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }

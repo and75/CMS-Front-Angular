@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ isEditMode ? 'Edit' : 'Create' }} Resource</h2>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="label" class="form-label">Label</label>
+        <input type="text" class="form-control" id="label" formControlName="label">
+      </div>
+      
+      <div class="mb-3">
+        <label for="url" class="form-label">URL</label>
+        <input type="url" class="form-control" id="url" formControlName="url">
+      </div>
+
+      <div class="mb-3">
+        <label for="year" class="form-label">Year</label>
+        <input type="number" class="form-control" id="year" formControlName="year">
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" formControlName="category">
+          <option value="videos">Videos</option>
+          <option value="documents">Documents</option>
+          <option value="presentations">Presentations</option>
+          <option value="datasets">Datasets</option>
+        </select>
+      </div>
+
+      <div class="mb-3" *ngIf="resourceForm.get('category')?.value === 'videos'">
+        <label for="youtubeUrl" class="form-label">YouTube URL</label>
+        <input type="url" class="form-control" id="youtubeUrl" formControlName="youtubeUrl">
+      </div>
+
+      <div class="mb-3">
+        <label for="thumbnail" class="form-label">Thumbnail URL</label>
+        <input type="url" class="form-control" id="thumbnail" formControlName="thumbnail">
+      </div>
+      
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" formControlName="status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="resourceForm.invalid">
+          {{ isEditMode ? 'Update' : 'Create' }}
+        </button>
+        <a routerLink="/admin/resources" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

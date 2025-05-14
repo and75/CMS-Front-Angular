@@ -1,0 +1,54 @@
+<div class="text-center mb-4">
+  <h2>Admin Login</h2>
+  <p class="text-muted">Sign in to access the admin panel</p>
+</div>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input 
+      type="text" 
+      class="form-control" 
+      id="username" 
+      formControlName="username"
+      [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+      placeholder="Enter username">
+    <div class="invalid-feedback">Username is required</div>
+  </div>
+  
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <div class="input-group">
+      <input 
+        [type]="showPassword ? 'text' : 'password'"
+        class="form-control" 
+        id="password" 
+        formControlName="password"
+        [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        placeholder="Enter password">
+      <button 
+        type="button" 
+        class="btn btn-outline-secondary" 
+        (click)="togglePasswordVisibility()">
+        <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+      </button>
+      <div class="invalid-feedback">Password is required</div>
+    </div>
+  </div>
+  
+  <button type="submit" 
+          class="btn btn-primary w-100 mb-3" 
+          [disabled]="loginForm.invalid || isSubmitting">
+    {{ isSubmitting ? 'Signing in...' : 'Sign In' }}
+  </button>
+
+  <div class="text-center">
+    <a routerLink="/" class="text-decoration-none">
+      Back to Site
+    </a>
+  </div>
+</form>
+
+<div class="alert alert-danger mt-3" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>

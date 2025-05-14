@@ -1,0 +1,88 @@
+<!-- Header -->
+<header>
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top" aria-label="Offcanvas navbar large">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/img/logo.png" width="30"> t-co.re.
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
+                aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
+                aria-labelledby="offcanvasNavbar2Label">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbar2Label">Menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Project
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/#theproject">The Chair's Project</a></li>
+                                <li><a class="dropdown-item" href="/#researchteam">Research team</a></li>
+                                <li><a class="dropdown-item" href="/#latestevents">Latest events</a></li>
+                                <li><a class="dropdown-item" href="/#latestnews">Lates news</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="/news">News</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/events">Events</a></li>
+                        <!-- Seminars, conference, outside facolty !-->
+                        <li class="nav-item"><a class="nav-link active" href="/resources">Ressources</a></li>
+                        <!-- Chair's publications, Others publications, Videos !-->
+                        <li class="nav-item"><a class="nav-link active"
+                                href="https://www.duncker-humblot.de/en/journals-philosophy/yearbook-for-philosophy-of-complex-systems/c-880"
+                                target="_blank">Yearbook</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/bibliography">Bibliography</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="/network">Network</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/#newsletter">Newsletter</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <!-- User Menu -->
+                        <li class="nav-item dropdown" *ngIf="isAuthenticated">
+                            <a class="nav-link dropdown-toggle user-menu" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i>
+                                {{ user?.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" routerLink="/admin/dashboard">
+                                        <i class="bi bi-speedometer2"></i> Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/admin/profile">
+                                        <i class="bi bi-person"></i> Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" (click)="logout()">
+                                        <i class="bi bi-box-arrow-right"></i> Logout
+                                    </button>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Login Link -->
+                        <li class="nav-item" *ngIf="!isAuthenticated">
+                            <a class="nav-link" routerLink="/login" routerLinkActive="active">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

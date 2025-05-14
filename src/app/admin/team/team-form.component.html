@@ -1,0 +1,70 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ isEditMode ? 'Edit' : 'Add' }} Team Member</h2>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+        
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+        </div>
+
+        <div class="col-md-6">
+          <label for="position" class="form-label">Position</label>
+          <input type="text" class="form-control" id="position" formControlName="position">
+        </div>
+
+        <div class="col-md-6">
+          <label for="department" class="form-label">Department</label>
+          <input type="text" class="form-control" id="department" formControlName="department">
+        </div>
+
+        <div class="col-12">
+          <label for="photo" class="form-label">Photo URL</label>
+          <input type="url" class="form-control" id="photo" formControlName="photo">
+        </div>
+
+        <div class="col-12">
+          <label for="bio" class="form-label">Bio</label>
+          <textarea class="form-control" id="bio" rows="4" formControlName="bio"></textarea>
+        </div>
+
+        <div class="col-md-4">
+          <label for="linkedin" class="form-label">LinkedIn URL</label>
+          <input type="url" class="form-control" id="linkedin" formControlName="linkedin">
+        </div>
+
+        <div class="col-md-4">
+          <label for="twitter" class="form-label">Twitter URL</label>
+          <input type="url" class="form-control" id="twitter" formControlName="twitter">
+        </div>
+
+        <div class="col-md-4">
+          <label for="github" class="form-label">GitHub URL</label>
+          <input type="url" class="form-control" id="github" formControlName="github">
+        </div>
+
+        <div class="col-md-6">
+          <label for="status" class="form-label">Status</label>
+          <select class="form-select" id="status" formControlName="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary" [disabled]="teamForm.invalid">
+          {{ isEditMode ? 'Update' : 'Add' }} Member
+        </button>
+        <a routerLink="/admin/team" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

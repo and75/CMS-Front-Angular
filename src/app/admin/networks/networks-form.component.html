@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ isEditMode ? 'Edit' : 'Create' }} Network</h2>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="networkForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="label" class="form-label">Label</label>
+        <input type="text" class="form-control" id="label" formControlName="label">
+      </div>
+      
+      <div class="mb-3">
+        <label for="url" class="form-label">URL</label>
+        <input type="url" class="form-control" id="url" formControlName="url">
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" formControlName="category">
+          <option value="cggg">CGGG Members</option>
+          <option value="axe">Research Axes</option>
+          <option value="france">French Network</option>
+          <option value="international">International Network</option>
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" formControlName="status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="networkForm.invalid">
+          {{ isEditMode ? 'Update' : 'Create' }}
+        </button>
+        <a routerLink="/admin/networks" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

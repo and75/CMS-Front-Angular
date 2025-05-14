@@ -1,0 +1,31 @@
+<!-- Project -->
+<section id="researchteam" class="full-screen d-flex align-items-center text-white">
+  <div class="container">
+      <div class="px-3 py-5 px-md-0 py-md-5">
+          <h2 class="fs-1 text-white pt-5 pb-5">Research team</h2>
+          <div class="row g-4 pb-5" *ngIf="teamMembers$ | async as teamData">
+              <div class="col-6 col-xl-3 col-md-4 col-sm-6"  *ngFor="let member of teamData.items">
+                  <div class="card text-center team-card  border-secondary text-white h-100" style="background-color: transparent;">
+                      <img [src]="member.img" [alt]="member.name" class="card-img-top">
+                      <div class="card-body border-0 px-1">
+                          <h5 class="card-title">
+                            <ng-container *ngIf="member.externalLink && member.externalLink.trim(); else internalLink">
+                                <a [href]="member.externalLink"
+                                   target="_blank"
+                                   class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                                  {{ member.alt }}
+                                </a>
+                              </ng-container>
+                              
+                              <ng-template #internalLink>
+                                <a href="/team/{{member.slug}}" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ member.alt }}</a>
+                              </ng-template>
+                          </h5>
+                          <p class="card-text px-4 small">{{member.role}}</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

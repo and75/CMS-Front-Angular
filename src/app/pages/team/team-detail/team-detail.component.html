@@ -1,0 +1,62 @@
+<ng-container *ngIf="data$ | async as data">
+  <section class="pt-5 pb-5" style="background-color: #ffffff">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-md-4 mb-4">
+          <img [src]="data.member.img" [alt]="data.member.name" class="card-img-top rounded avatar-team">
+        </div>
+        <div class="col-md-8 team-container">
+          <div class="news-item d-flex align-items-start mb-4 pb-3">
+            <div class="content ms-3">
+              <div class="infos d-flex justify-content-start gap-3 mt-2 mb-5 border-bottom pb-3">
+                <div class="author pt-1">
+                  <img src="/assets/img/logo-black.png" width="60px" style="opacity:0.5">
+                </div>
+                <div style="line-height: 1;">
+                  <h1 class="title mb-0">{{ data.member.name }}</h1>
+                  <div class="role">{{ data.member.role }}</div>
+                </div>
+              </div>
+
+              <div class="text">
+                <ng-container *ngIf="data.member.project">
+                  <h5 class="mt-4 mb-4">Project</h5>
+                  <h6 class="mb-2">{{ data.member.project }}</h6>
+                  <p class="text-muted mb-4" *ngIf="data.member.projectDesc">
+                    <i>{{ data.member.projectDesc }}</i>
+                  </p>
+                </ng-container>
+
+                <h5>Bio</h5>
+                <p class="mb-4">
+                  {{ data.member.bio }}
+                </p>
+
+                <ng-container *ngIf="(data.member.book ?? []).length > 0">
+                  <h5>Publications</h5>
+                  <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item d-flex justify-content-start gap-2" *ngFor="let b of data.member.book">
+                      <div><i class="bi bi-book-half"></i></div>
+                      <p class="mb-0">{{ b }}</p>
+                    </li>
+                  </ul>
+                </ng-container>
+
+                <ng-container *ngIf="(data.member?.resources ?? []).length > 0">
+                  <h5>Resources</h5>
+                  <div class="list-group list-group-flush mb-4">
+                    <a *ngFor="let r of data.member.resources" [href]="r.url" class="list-group-item list-group-item-action" target="_blank">
+                      <i class="bi {{ r.icon }}"></i> {{ r.name }}
+                    </a>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-team-navigator [currentMemberId]="data.member.id" [members]="data.allMembers"></app-team-navigator>
+</ng-container>

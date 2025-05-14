@@ -1,0 +1,55 @@
+<!-- latestnews -->
+<section id="latestnews" class="d-flex align-items-center" [style.background-color]="bgcolor">
+    <div class="container">
+        <div class="px-3 py-5 px-md-0 py-md-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-end w-100 pt-5 pb-5">
+                        <div>
+                            <h2 class="fs-1 text-white">Latest News</h2>
+                            <p class="lead text-white p-0 m-0">Stay updated with our latest announcements and articles</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4" *ngIf="news$ | async as newsData">
+                <div class="col-12 col-md-4" *ngFor="let article of newsData.items">
+                    <div class="d-flex flex-row mb-3">
+                        <div class="card shadow-sm rounded-3 news-card text-white border" style="background-color:transparent;">
+                            <div class="card-body">
+                                <h4 class="pb-0 mb-4">
+                                    <a href="news/{{article.slug}}" target="_blanck"
+                                        class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">{{article.title}}</a>
+                                </h4>
+                                <div class="infos d-flex justify-content-start align-items-center gap-3 mt-2 mb-5">
+                                    <div class="date"><i class="bi bi-calendar"></i> {{ article.publishedAt | date }}
+                                    </div>
+                                    <div class="author">
+                                        <i class="bi bi-person-circle"></i> by Team
+                                    </div>
+                                </div>
+                                <p>{{article.excerpt}}</p>
+
+                                <p class="pt-3 text-secondary fw-bold">
+
+                                </p>
+                                <p></p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center border-light">
+                                <div>
+                                    <a *ngFor="let category of article.categories" [routerLink]="['/events/?cat=', category.name]" class="badge text-bg-light text-decoration-none me-1">{{category.name}}</a>
+                                </div>
+                                <app-social-share currentUrl="/news/{{article.slug}}" buttonStyle="btn-outline-light"></app-social-share>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="text-end mt-3">
+                        <a href="/news/archive.html" class="btn btn-outline-light">All news <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

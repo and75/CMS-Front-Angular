@@ -1,0 +1,98 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Bibliography Management</h1>
+  <a routerLink="create" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> Create Entry
+  </a>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <!-- Search and Filter Section -->
+    <div class="filters-section mb-4">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Search bibliography..." 
+              [ngModel]="paginationParams$.value.search"
+              (ngModelChange)="onSearch($event)">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex gap-2">
+            <select 
+              class="form-select" 
+              [ngModel]="paginationParams$.value.sort"
+              (ngModelChange)="onSortChange($event)">
+              <option value="">Sort by...</option>
+              <option *ngFor="let option of sortOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+            
+            <select 
+              class="form-select" 
+              [ngModel]="paginationParams$.value.order"
+              (ngModelChange)="onOrderChange($event)">
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-list-container
+      [currentPage]="(paginatedData$ | async)?.page || 1"
+      [itemsPerPage]="(paginatedData$ | async)?.limit || 10"
+      [totalItems]="(paginatedData$ | async)?.total || 0"
+      [totalPages]="(paginatedData$ | async)?.totalPages || 1"
+      [sortOptions]="sortOptions"
+      (paramsChange)="onParamsChange($event)">
+      
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Year</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of (paginatedData$ | async)?.items">
+              <td>{{ item.title }}</td>
+              <td>{{ item.author }}</td>
+              <td>{{ item.year }}</td>
+              <td>{{ item.type }}</td>
+              <td>
+                <span class="badge" [class.bg-success]="item.status === 'published'"
+                                  [class.bg-warning]="item.status === 'draft'">
+                  {{ item.status }}
+                </span>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a [routerLink]="['edit', item.id]" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteEntry(item.id)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-list-container>
+  </div>
+</div>

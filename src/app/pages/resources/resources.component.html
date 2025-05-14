@@ -1,0 +1,70 @@
+<section class="pt-5 pb-5" style="background-color: #f8f9fa">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 border-start order-md-2">
+        <div class="d-flex flex-row flex-wrap gap-3 mb-3">
+          <app-resources-category-filter [filters]="filters" [selectedFilter]="selectedCategory"
+            (filterChange)="onFilterChange($event)">
+          </app-resources-category-filter>
+        </div>
+      </div>
+      <div class="col-md-9 order-md-1">
+        <div class="row">
+          <div class="col-12">
+            <div class="filters-section">
+              <div class="filters-container d-flex align-items-md-center justify-content-md-between g-3">
+                <app-resources-search [searchTerm]="searchTerm"
+                  (searchChange)="onSearchChange($event)"></app-resources-search>
+                <app-resources-sort [sortOptions]="sortOptions" [selectedSort]="selectedSort" [sortOrder]="sortOrder"
+                  (sortChange)="onSortChange($event)" (orderChange)="onOrderChange($event)">
+                </app-resources-sort>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 news-container mt-5">
+
+            <!-- Resources List -->
+            <div class="list-group  list-group-flush" *ngIf="data$ | async as data">
+              <ng-container
+                *ngVar="filterResources(getAllResources(data), selectedCategory, searchTerm) as filteredResources">
+                <div class="news-item d-flex mb-4 w-100 border-bottom "
+                  *ngFor="let item of getPaginatedResources(filteredResources)">
+                  <div class="icon" style="width:60px">
+                    <img src="/assets/img/logo.png" class="img-fluid rounded list-thumbnail p-2">
+                  </div>
+                  <div class="content ms-3 pb-3 w-100">
+                    <h2 class="title mb-3"><a [href]="item.url" target="_blank" class="link-primary link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                      {{item.label}}
+                    </a>
+                    </h2>
+                    <div class="infos d-flex justify-content-start align-items-center gap-3 mb-3">
+                      <div class="author"><i class="bi bi-person-circle"></i> Team </div>
+                      <div class="date"><i class="bi bi-calendar"></i> {{ item.publishedAt | date }}</div>
+                      <div class="category">
+                        <span [ngClass]="getCategoryClass(item.category)">
+                          {{ item.category }}
+                        </span>
+                      </div>
+                    </div>
+                    <p class="text">
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    </p>
+                  </div>
+                </div>
+                <app-pagination [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
+                  [totalItems]="filteredResources.length"
+                  [totalPages]="Math.ceil(filteredResources.length / itemsPerPage)" (pageChange)="onPageChange($event)"
+                  (itemsPerPageChange)="onItemsPerPageChange($event)">
+                </app-pagination>
+              </ng-container>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

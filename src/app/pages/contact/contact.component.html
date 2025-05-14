@@ -1,0 +1,156 @@
+<section class="pt-5 pb-5 section-contact"
+>
+<div class="container">
+
+    <div class="row">
+      <!-- Contact Information -->
+      <div class="col-lg-4">
+        <div class="contact-info card p-4">
+          <div class="card-header  bg-white card-title border-0">
+            <h3 class="m-0 text-primary">Contact Information</h3>
+          </div>
+          <div class="card-body">
+            <div class="info-item">
+              <i class="bi bi-geo-alt"></i>
+              <div>
+                <h4 class="m-0 text-primary">Address</h4>
+                <p>
+                  Centre Gilles-Gaston Granger<br>
+                  Maison de la Recherche<br>
+                  29 Avenue Robert Schuman<br>
+                  13621 Aix-en-Provence
+                </p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-envelope"></i>
+              <div>
+                <h4 class="m-0 pt-2 pb-1 text-primary">Email</h4>
+                <p><a href="mailto:contact&#64;cggg.fr">contact&#64;cggg.fr</a></p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-telephone"></i>
+              <div>
+                <h4 class="m-0 pt-2 pb-1 text-primary">Phone</h4>
+                <p><a href="tel:+33123456789">+33 1 23 45 67 89</a></p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-clock"></i>
+              <div>
+                <h4 class="m-0 pt-2 pb-1 text-primary">Office Hours</h4>
+                <p>Monday - Friday<br>9:00 AM - 5:00 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-8">
+        <div class="contact-form card p-4">
+          <div class="card-header bg-white card-title border-0">
+            <h3 class="m-0 text-primary">Send us a Message</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="name" 
+                      formControlName="name"
+                      [class.is-invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                    <div class="invalid-feedback" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                      Please enter your name
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input 
+                      type="email" 
+                      class="form-control" 
+                      id="email" 
+                      formControlName="email"
+                      [class.is-invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                    <div class="invalid-feedback" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                      Please enter a valid email address
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="subject" 
+                      formControlName="subject"
+                      [class.is-invalid]="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched">
+                    <div class="invalid-feedback" *ngIf="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched">
+                      Please enter a subject
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea 
+                      class="form-control" 
+                      id="message" 
+                      rows="5" 
+                      formControlName="message"
+                      [class.is-invalid]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"></textarea>
+                    <div class="invalid-feedback" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+                      Please enter a message (minimum 10 characters)
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary"
+                    [disabled]="contactForm.invalid || isSubmitting">
+                    {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Success Message -->
+              <div class="alert alert-success mt-3" *ngIf="submitSuccess">
+                Your message has been sent successfully!
+              </div>
+
+              <!-- Error Message -->
+              <div class="alert alert-danger mt-3" *ngIf="submitError">
+                {{ submitError }}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="col-12 mt-4">
+        <div class="map-container card">
+          <div class="card-body">
+            <a [href]="getGoogleMapsUrl()" target="_blank" class="map-link">
+              <img [src]="getStaticMapUrl()" alt="Office Location" class="map-image">
+              <div class="map-overlay">
+                <span class="btn btn-light">
+                  <i class="bi bi-map"></i> Open in Google Maps
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

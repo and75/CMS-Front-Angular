@@ -1,0 +1,19 @@
+<section id="newsletter" class="d-flex flex-column align-items-center text-white text-center py-5" style="background-color:#303e50;">
+    <div class="container">
+        <div class="row d-flex flex-column align-items-center pb-3">
+            <div class="col-sm-12 col-md-6">
+                <h2>Subscribe to our mailing list</h2>
+                <p>Subscribe to our mailing list to receive updates on our latest news and events.</p>
+                <form [formGroup]="mailingListForm" (ngSubmit)="onSubmit()" class="d-flex flex-nowrap align-items-start g-0">
+                    <!-- First group: keep left border -->
+                    <div class="input-group flex-nowrap me-0">
+                      <input type="text" class="form-control" formControlName="name" placeholder="Name" />
+                      <input type="text" class="form-control radius-0" formControlName="institution" placeholder="Institution" />
+                      <input type="email" class="form-control radius-0" formControlName="email" placeholder="email&#64;example.com" />
+                      <button type="submit" class="btn btn-primary radius-start-0">Subscribe</button>
+                    </div>
+                  </form>         
+            </div>
+        </div>
+    </div>
+</section>

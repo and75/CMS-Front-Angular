@@ -1,0 +1,36 @@
+<section class="bibliography-page px-md-0 py-md-5 px-3 py-3">
+
+  <div class="container">
+    <app-bibliography-filters [filters]="filters" [selectedFilter]="selectedFilter" [searchTerm]="searchTerm"
+      (filterChange)="onFilterChange($event)" (searchChange)="onSearchChange($event)">
+    </app-bibliography-filters>
+
+    <div class="bibliography-content" *ngIf="data$ | async as sections">
+      <ng-container *ngFor="let section of sections">
+        <section class="bibliography-section" *ngIf="section.items.length > 0">
+          <h2>{{ section.title }}</h2>
+          <div class="bibliography-list">
+            <a *ngFor="let item of section.items" [href]="item.url" target="_blank" class="bibliography-item">
+              <div class="item-content">
+                <div class="item-year">{{ item.year }}</div>
+                <h3>{{ item.reference }}</h3>
+                <i class="bi bi-box-arrow-up-right"></i>
+              </div>
+            </a>
+          </div>
+
+        </section>
+        <app-pagination [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [totalItems]="section.totalItems"
+          [totalPages]="Math.ceil(section.totalItems / itemsPerPage)"
+          (pageChange)="onPageChange($event, section.section)"
+          (itemsPerPageChange)="onItemsPerPageChange($event, section.section)">
+        </app-pagination>
+      </ng-container>
+
+      <!-- No Results Message -->
+      <div class="no-results" *ngIf="!hasResults(sections)">
+        <p>No bibliography entries found matching your search criteria.</p>
+      </div>
+    </div>
+  </div>
+</section>

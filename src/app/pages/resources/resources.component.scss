@@ -1,0 +1,52 @@
+.resources-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.filters-section {
+  .form-control,
+  .form-select {
+    &:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+  }
+}
+
+.list-group-item {
+  margin-bottom: 1.2rem;
+
+  img.list-thumbnail {
+    background-color: #0e254a;
+    width: 50px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .resources-content {
+    padding: 2rem 0;
+  }
+
+  .resource-image {
+    width: 100px;
+    height: 75px;
+  }
+}
+
+@media (max-width: 768px) {
+
+
+  .search-input {
+    width: 100%;
+  }
+
+  .btn-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

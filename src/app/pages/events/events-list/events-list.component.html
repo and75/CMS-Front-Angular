@@ -1,0 +1,57 @@
+<section class="pt-5 pb-5" style="background-color: #ffffff">
+  <div class="container">
+    <!-- Filters Section -->
+    <div class="filters-section mb-4">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <app-events-category-filter [selectedCategory]="selectedCategory" [categories]="categories"
+            (categoryChange)="onCategoryChange($event)">
+          </app-events-category-filter>
+        </div>
+        <div class="col-md-6">
+          <app-events-order [sort]="paginationParams$.value.sort || ''" [order]="paginationParams$.value.order"
+            [sortOptions]="sortOptions" (sortChange)="onSortChange($event)" (orderChange)="onOrderChange($event)">
+          </app-events-order>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4" *ngIf="events$ | async as eventsData" >
+      <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let event of eventsData.items">
+        <div class="card shadow-sm event-card border h-100">
+          <!-- <img [src]="event.img" [alt]="event.alt" class="card-img-top"> -->
+          <div class="card-header">
+            <span class="date">
+              <i class="bi bi-calendar"></i>
+              {{ event.date_start | date}}
+            </span>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title">
+              <a [routerLink]="['/events', event.slug]"
+                class="link-primary link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">{{event.title}}</a>
+            </h3>
+            <div class="news-meta mb-2"></div>
+            <p class="card-text flex-grow-1" style="min-height: 70px;">{{ event.bref_description }}</p>
+
+          </div>
+          <div class="card-footer bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+              <a [routerLink]="['/events/?cat=', event.category]" class="badge text-bg-primary text-decoration-none">{{
+                event.category }}</a>
+              <app-social-share currentUrl="/events/{{event.slug}}"></app-social-share>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 tex-align-end">
+        <app-pagination [currentPage]="(events$ | async)?.page || 1" [itemsPerPage]="(events$ | async)?.limit || 10"
+          [totalItems]="(events$ | async)?.total || 0" [totalPages]="(events$ | async)?.totalPages || 1"
+          (pageChange)="onPageChange($event)" (itemsPerPageChange)="onItemsPerPageChange($event)">
+        </app-pagination>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+.card {
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.social-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.member-details {
+  .department {
+    color: #3498db;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .bio {
+    color: #2c3e50;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .email {
+    color: #7f8c8d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      font-size: 1.2rem;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: #3498db;
+      }
+    }
+  }
+}
+
+.btn i {
+  margin-right: 0.5rem;
+}

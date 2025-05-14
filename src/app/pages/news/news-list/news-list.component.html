@@ -1,0 +1,59 @@
+<section class="pt-5 pb-5" style="background-color: #ffffff">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 border-start order-md-2">
+        <div class="d-flex flex-row flex-wrap gap-3 mb-3">
+          <app-news-category-filter [selectedCategory]="selectedCategory" (categoryChange)="onCategoryChange($event)">
+          </app-news-category-filter>
+        </div>
+      </div>
+      <div class="col-md-9 order-md-1">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-md-12">
+                <app-news-order [sort]="paginationParams$.value.sort || ''"
+                  [order]="paginationParams$.value.order || 'desc'" [sortOptions]="sortOptions"
+                  (sortChange)="onSortChange($event)" (orderChange)="onOrderChange($event)">
+                </app-news-order>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 news-container mt-5">
+                <app-list-container [currentPage]="(paginatedData$ | async)?.page || 1"
+                  [itemsPerPage]="(paginatedData$ | async)?.limit || 10"
+                  [totalItems]="(paginatedData$ | async)?.total || 0"
+                  [totalPages]="(paginatedData$ | async)?.totalPages || 1" [sortOptions]="sortOptions"
+                  (paramsChange)="onParamsChange($event)"
+                  >
+                  <div class="news-item d-flex mb-4 w-100 border-bottom " *ngFor="let post of (paginatedData$ | async)?.items">
+                    <div class="icon" style="width:60px">
+                      <img src="/assets/img/logo.png" class="img-fluid rounded list-thumbnail p-2">
+                    </div>
+                    <div class="content ms-3 pb-3 w-100">
+                      <h2 class="title mb-3"><a [routerLink]="['/news', post.slug]" target="_blanck"
+                          class="link-primary link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">{{post.title}}</a>
+                      </h2>
+                      <div class="infos d-flex justify-content-start align-items-center gap-3 mb-3">
+                        <div class="author"><i class="bi bi-person-circle"></i> Team </div>
+                        <div class="date"><i class="bi bi-calendar"></i> {{ post.publishedAt | date }}</div>
+                        <div class="category"> <span class="badge bg-primary me-1"
+                            *ngFor="let category of post.categories">
+                            {{ category.name }}
+                          </span>
+                        </div>
+                      </div>
+                      <p class="text">
+                        {{ post.excerpt}}
+                      </p>
+                    </div>
+                  </div>
+                </app-list-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

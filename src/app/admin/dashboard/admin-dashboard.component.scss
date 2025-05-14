@@ -1,0 +1,47 @@
+.card {
+  transition: transform 0.2s;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.btn i {
+  margin-right: 0.5rem;
+}
+
+.section-title {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.text-purple {
+  color: #8e44ad;
+}
+
+.btn-purple {
+  background-color: #8e44ad;
+  border-color: #8e44ad;
+  color: white;
+
+  &:hover {
+    background-color: #6c3483;
+    border-color: #6c3483;
+    color: white;
+  }
+}
+
+.btn-outline-purple {
+  color: #8e44ad;
+  border-color: #8e44ad;
+
+  &:hover {
+    background-color: #8e44ad;
+    color: white;
+  }
+}

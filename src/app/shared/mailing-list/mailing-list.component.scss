@@ -1,0 +1,16 @@
+.custom-input {
+    background-color: #272727; // Sfondo personalizzato
+    border: 1px solid #9a9b99; // Bordo colorato
+    color: #fff; // Colore del testo
+
+    &::placeholder {
+        color: #979797; // Colore del placeholder
+        opacity: 1; // Assicura che non sia semitrasparente
+    }
+
+    &:focus {
+        background-color: #eaf0ff;
+        border-color: #003399;
+        box-shadow: none;
+    }
+}
