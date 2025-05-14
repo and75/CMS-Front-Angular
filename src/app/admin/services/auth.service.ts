@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 interface AuthResponse {
   token: string;
@@ -17,6 +18,7 @@ interface AuthResponse {
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'auth_user';
+  private isBrowser: boolean;
   
   // Mock credentials for development
   private readonly VALID_CREDENTIALS = {
@@ -24,7 +26,8 @@ export class AuthService {
     password: 'admin123'
   };
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
     console.log('AuthService initialized');
   }
 
@@ -51,9 +54,11 @@ export class AuthService {
         }
       };
       
-      // Store auth data
-      localStorage.setItem(this.TOKEN_KEY, response.token);
-      localStorage.setItem(this.USER_KEY, JSON.stringify(response.user));
+      // Store auth data only in browser
+      if (this.isBrowser) {
+        localStorage.setItem(this.TOKEN_KEY, response.token);
+        localStorage.setItem(this.USER_KEY, JSON.stringify(response.user));
+      }
       
       console.log('Login successful');
       return of(response).pipe(
@@ -68,11 +73,15 @@ export class AuthService {
 
   logout(): void {
     console.log('Logging out, clearing auth data');
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_KEY);
+    if (this.isBrowser) {
+      localStorage.removeItem(this.TOKEN_KEY);
+      localStorage.removeItem(this.USER_KEY);
+    }
   }
 
   isAuthenticated(): boolean {
+    if (!this.isBrowser) return false;
+
     const token = localStorage.getItem(this.TOKEN_KEY);
     const userStr = localStorage.getItem(this.USER_KEY);
     
@@ -102,6 +111,8 @@ export class AuthService {
   }
 
   getUser(): any {
+    if (!this.isBrowser) return null;
+
     const userStr = localStorage.getItem(this.USER_KEY);
     if (!userStr) {
       console.log('No user data found');

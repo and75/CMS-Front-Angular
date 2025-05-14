@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 declare var bootstrap: any;
 
@@ -8,16 +9,27 @@ declare var bootstrap: any;
   providedIn: 'root'
 })
 export class BootstrapInitializerService {
-  constructor(private router: Router) {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.initBootstrapComponents();
-        window.scrollTo(0, 0); // Torna in alto ad ogni navigazione
-      });
+  private isBrowser: boolean;
+
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    
+    if (this.isBrowser) {
+      this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(() => {
+          this.initBootstrapComponents();
+          window.scrollTo(0, 0);
+        });
+    }
   }
 
   initBootstrapComponents(): void {
+    if (!this.isBrowser) return;
+
     // Tooltips
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
       new bootstrap.Tooltip(el);
@@ -33,7 +45,7 @@ export class BootstrapInitializerService {
       new bootstrap.Dropdown(el);
     });
 
-    // Modals (opzionale, di solito gestiti via JS solo all’apertura)
+    // Modals
     document.querySelectorAll('.modal').forEach(el => {
       new bootstrap.Modal(el);
     });
@@ -43,7 +55,7 @@ export class BootstrapInitializerService {
       new bootstrap.Offcanvas(el);
     });
 
-    // Collapse (es. menu hamburger)
+    // Collapse
     document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(el => {
       new bootstrap.Collapse(el, { toggle: false });
     });
@@ -58,7 +70,7 @@ export class BootstrapInitializerService {
       new bootstrap.Toast(el);
     });
 
-    // ScrollSpy (richiede init via codice)
+    // ScrollSpy
     document.querySelectorAll('[data-bs-spy="scroll"]').forEach(el => {
       new bootstrap.ScrollSpy(document.body, {
         target: el.getAttribute('data-bs-target') || '',

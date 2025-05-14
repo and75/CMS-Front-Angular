@@ -1,6 +1,9 @@
-import { Component, Input } from '@angular/core';
+// src/app/shared/hero-section-archive/hero-section-archive.component.ts
+import { Component, Input, Inject, PLATFORM_ID } from '@angular/core';
 import { PageService } from '../../core/services/page.service';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+
 declare var bootstrap: any;
 
 @Component({
@@ -10,8 +13,11 @@ declare var bootstrap: any;
   styleUrls: ['./hero-section-archive.component.scss']
 })
 export class HeroSectionArchiveComponent {
-
-  constructor(private route: Router, private pageService: PageService) { }
+  constructor(
+    private route: Router,
+    private pageService: PageService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   @Input() title: string = 'Archive';
   @Input() description: string = 'Browse through our collection of articles and resources';
@@ -22,30 +28,30 @@ export class HeroSectionArchiveComponent {
   whatsappUrl = '';
   facebookUrl = '';
   copied = false;
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   ngOnInit(): void {
-
-    // Get the current route path as the slug
-  const urlSegments = this.route.url.split('/');
-  const slug = urlSegments[1]; // 'post' in '/post'
-  console.log('SLUG', slug);
+    const urlSegments = this.route.url.split('/');
+    const slug = urlSegments[1];
+    console.log('SLUG', slug);
+    
     this.pageService.getPageContent(slug as any).subscribe(pageData => {
       this.title = pageData.title;
-      this.description = pageData.description
+      this.description = pageData.description;
     });
 
-    this.currentUrl = this.route.url;
-    this.linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(this.currentUrl)}`;
-    this.whatsappUrl = `https://wa.me/?text=${encodeURIComponent('Guarda questa pagina: ' + this.currentUrl)}`;
-    this.facebookUrl = `https://www.facebook.com/sharer/sharer.php?u==${encodeURIComponent(this.currentUrl)}`;
+    if (this.isBrowser) {
+      this.currentUrl = this.route.url;
+      this.linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(this.currentUrl)}`;
+      this.whatsappUrl = `https://wa.me/?text=${encodeURIComponent('Guarda questa pagina: ' + this.currentUrl)}`;
+      this.facebookUrl = `https://www.facebook.com/sharer/sharer.php?u==${encodeURIComponent(this.currentUrl)}`;
+    }
   }
 
-
-
   copyToClipboard(button: HTMLElement): void {
-    navigator.clipboard.writeText(this.currentUrl).then(() => {
+    if (!this.isBrowser) return;
 
-      // Distruggi eventuale tooltip esistente
+    navigator.clipboard.writeText(this.currentUrl).then(() => {
       const existing = bootstrap.Tooltip.getInstance(button);
       if (existing) {
         existing.dispose();
@@ -54,18 +60,15 @@ export class HeroSectionArchiveComponent {
       button.setAttribute('data-bs-original-title', 'Link copiato!');
       button.setAttribute('data-bs-placement', 'top');
 
-      // Crea nuovo tooltip
       const tooltip = new bootstrap.Tooltip(button, {
         trigger: 'manual'
       });
 
       tooltip.show();
 
-      // Nascondi dopo 1.5 secondi
       setTimeout(() => {
         tooltip.hide();
       }, 1500);
-
     });
   }
 }

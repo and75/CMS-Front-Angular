@@ -1,6 +1,8 @@
-import { Component, Input, AfterViewChecked } from '@angular/core';
-import { NgClass } from '@angular/common'; // <--- Importa questo
+import { Component, Input, Inject, PLATFORM_ID } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+
 declare var bootstrap: any;
 
 @Component({
@@ -19,7 +21,7 @@ declare var bootstrap: any;
           <i class="bi bi-whatsapp"></i>
         </a>
     </div>
-`,
+  `,
   styles: [``]
 })
 export class SocialShareComponent {
@@ -30,6 +32,14 @@ export class SocialShareComponent {
   whatsappUrl = '';
   facebookUrl = '';
   copied = false;
+  private isBrowser: boolean;
+
+  constructor(
+    private route: Router,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
     this.currentUrl = this.route.url;
@@ -38,11 +48,10 @@ export class SocialShareComponent {
     this.facebookUrl = `https://www.facebook.com/sharer/sharer.php?u==${encodeURIComponent(this.currentUrl)}`;
   }
 
-  constructor(private route: Router) { }
-
   copyToClipboard(button: HTMLElement): void {
+    if (!this.isBrowser) return;
+
     navigator.clipboard.writeText(this.currentUrl).then(() => {
-      // Distruggi eventuale tooltip esistente
       const existing = bootstrap.Tooltip.getInstance(button);
       if (existing) {
         existing.dispose();
@@ -51,17 +60,14 @@ export class SocialShareComponent {
       button.setAttribute('data-bs-original-title', 'Link copiato!');
       button.setAttribute('data-bs-placement', 'top');
 
-      // Crea nuovo tooltip
       const tooltip = new bootstrap.Tooltip(button, {
         trigger: 'manual'
       });
 
       tooltip.show();
 
-      // Nascondi dopo 1.5 secondi
       setTimeout(() => {
         tooltip.hide();
-
       }, 1500);
     });
   }

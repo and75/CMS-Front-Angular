@@ -1,0 +1,11 @@
+identifier: mda6n5u5u53cb5f1
+appPort: 1864
+staticPort: 1668
+reloadPort: 2667
+hostName: localhost
+projectName: demo
+homeFolder: C:\Users\Andrea\Documents\Lavoro\Belleville-system\GitHub\CMS-Front-Angular
+distFolder: dist/demo
+outDir: >-
+  C:\Users\Andrea\Documents\Lavoro\Belleville-system\GitHub\CMS-Front-Angular\dist\static
+handle404: ''

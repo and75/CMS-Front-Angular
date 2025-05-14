@@ -1,14 +1,26 @@
-// mailing-list.service.ts
+// src/app/core/services/mailing-list.service.ts
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MailingListService {
   private readonly apiUrl = 'https://api.brevo.com/v3/contacts';
+  private isBrowser: boolean;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
-  subscribe(name: string, institution: string, email: string) {
+  subscribe(name: string, institution: string, email: string): Observable<any> {
+    if (!this.isBrowser) {
+      return of(null);
+    }
+
     return this.http.post(
       this.apiUrl,
       {
@@ -17,7 +29,7 @@ export class MailingListService {
           INSTITUTION: institution,
         },
         email,
-        listIds: [2],  // Inserisci l'ID della tua lista
+        listIds: [2],
         updateEnabled: true
       },
       {

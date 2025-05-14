@@ -57,6 +57,64 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/demo/server",
+            "main": "src/server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "demo:build:development",
+              "serverTarget": "demo:server:development"
+            },
+            "production": {
+              "browserTarget": "demo:build:production",
+              "serverTarget": "demo:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/",
+              "/news",
+              "/events",
+              "/bibliography",
+              "/network",
+              "/resources",
+              "/contact"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "demo:build:production",
+              "serverTarget": "demo:server:production"
+            },
+            "development": {
+              "browserTarget": "demo:build:development",
+              "serverTarget": "demo:server:development"
+            }
+          }
         }
       },
       "prefix": "app",

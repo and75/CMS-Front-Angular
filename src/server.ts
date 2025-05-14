@@ -1,7 +1,7 @@
 import 'zone.js/node';
 import { APP_BASE_HREF } from '@angular/common';
-import { ngExpressEngine } from '@nguniversal/express-engine';
-import * as express from 'express';
+import { CommonEngine } from '@angular/ssr';
+import express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import bootstrap from './main.server';
@@ -13,9 +13,7 @@ export function app(): express.Express {
     ? 'index.original.html'
     : 'index';
 
-  server.engine('html', ngExpressEngine({
-    bootstrap
-  }));
+  const commonEngine = new CommonEngine();
 
   server.set('view engine', 'html');
   server.set('views', distFolder);
@@ -24,11 +22,19 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
 
-  server.get('*', (req, res) => {
-    res.render(indexHtml, {
-      req,
-      providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }]
-    });
+  server.get('*', (req: { protocol: any; originalUrl: any; baseUrl: any; headers: any; }, res: { send: (arg0: string) => any; }, next: (arg0: any) => any) => {
+    const { protocol, originalUrl, baseUrl, headers } = req;
+
+    commonEngine
+      .render({
+        bootstrap,
+        documentFilePath: join(distFolder, indexHtml),
+        url: `${protocol}://${headers.host}${originalUrl}`,
+        publicPath: distFolder,
+        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+      })
+      .then((html) => res.send(html))
+      .catch((err) => next(err));
   });
 
   return server;
